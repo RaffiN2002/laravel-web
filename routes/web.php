@@ -18,15 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('google')->redirect();
-});
+Route::get('/auth/redirect', [authcontroller::class, "redirect"]);
 
-Route::get('/auth/callback', function () {
-    $user = Socialite::driver('google')->user();
-    $id = $user->id;
-    $email = $user->email;
-    $name = $user->name;
-
-    return "Welcome $id - $email - $name!";
-});
+Route::get('/auth/callback', [authcontroller::class, "callback"]);
