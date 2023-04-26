@@ -19,6 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('auth', [authcontroller::class, "index"]); 
 Route::get('/auth/redirect', [authcontroller::class, "redirect"]);
-
 Route::get('/auth/callback', [authcontroller::class, "callback"]);
+Route::get('/dashboard', function () {
+    return 'Welcome ' . Auth::user()->name .'';
+});

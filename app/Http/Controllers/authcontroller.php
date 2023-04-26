@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
 class authcontroller extends Controller
 {
+    function index(){
+        return view('auth.index');
+    }
+
     function redirect(){
         return Socialite::driver('google')->redirect();
     }
@@ -17,10 +22,19 @@ class authcontroller extends Controller
         $id = $user->id;
         $email = $user->email;
         $name = $user->name;
+
+        $check = User::where('email',$email)->count();
+        if($check > 0){
+            $user = User::updateOrCreate(
+                ['email' => $email],
+                ['name' => $name, 'google_id' => $id]
+            );
+            Auth::login($user);
+            return redirect()->to('dashboard');
+        }
+        else{
+            return redirect()->to('auth')->with('error', 'Access denied due to unauthorized account');
+        }
     
-        $user = User::updateOrCreate(
-            ['email' => $email],
-            ['name' => $name, 'google_id' => $id]
-        );
     }
 }
