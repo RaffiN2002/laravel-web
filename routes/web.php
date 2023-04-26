@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\authcontroller;
+use App\Http\Controllers\controllerPage;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,13 @@ Route::get('/auth', [authcontroller::class, "index"])->name('login')->middleware
 Route::get('/auth/redirect', [authcontroller::class, "redirect"])->middleware('guest');
 Route::get('/auth/callback', [authcontroller::class, "callback"])->middleware('guest');
 Route::get('/auth/logout', [authcontroller::class, "logout"]);
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->middleware('auth');
+
+Route::prefix('dashboard')->middleware('auth')->group(
+    function () {
+        Route::get('/', function (){
+            return view('dashboard.index');
+        });
+
+        Route::resource('page', controllerPage::class);
+    }
+);
