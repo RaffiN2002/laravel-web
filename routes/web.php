@@ -26,5 +26,5 @@ Route::get('/auth/redirect', [authcontroller::class, "redirect"])->middleware('g
 Route::get('/auth/callback', [authcontroller::class, "callback"])->middleware('guest');
 Route::get('/auth/logout', [authcontroller::class, "logout"]);
 Route::get('/dashboard', function () {
-    return 'Welcome ' . Auth::user()->name .'';
+    return view('dashboard.index');
 })->middleware('auth');
