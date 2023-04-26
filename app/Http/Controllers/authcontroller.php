@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -17,6 +18,9 @@ class authcontroller extends Controller
         $email = $user->email;
         $name = $user->name;
     
-        return "Welcome $id - $email - $name!";
+        $user = User::updateOrCreate(
+            ['email' => $email],
+            ['name' => $name, 'google_id' => $id]
+        );
     }
 }
