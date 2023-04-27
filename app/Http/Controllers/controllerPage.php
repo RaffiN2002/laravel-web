@@ -78,7 +78,8 @@ class controllerPage extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = page::where('id',$id)->first();
+        return view('dashboard.page.edit')->with('data',$data);
     }
 
     /**
@@ -90,7 +91,24 @@ class controllerPage extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate(
+            [
+                'title'=>'required',
+                'content'=>'required',
+            ], 
+            [
+                'title.required'=> 'Title cannot be empty',
+                'content.required'=>'Content cannot be empty',
+            ]
+            );
+
+            $data = [
+                'title'=>$request->title,
+                'content'=>$request->content
+            ];
+            page::where('id',$id)->update($data);
+
+            return redirect()->route('page.index')->with('success','Data Updated');
     }
 
     /**
@@ -101,6 +119,7 @@ class controllerPage extends Controller
      */
     public function destroy($id)
     {
-        //
+        page::where('id',$id)->delete();
+        return redirect()->route('page.index')->with('success','Data Deleted');
     }
 }

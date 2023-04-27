@@ -29,10 +29,7 @@ Route::get('/auth/logout', [authcontroller::class, "logout"]);
 
 Route::prefix('dashboard')->middleware('auth')->group(
     function () {
-        Route::get('/', function (){
-            return view('dashboard.layout');
-        });
-
+        Route::get('/',[controllerPage::class,'index']);
         Route::resource('page', controllerPage::class);
     }
 );
