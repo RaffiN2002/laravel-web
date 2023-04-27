@@ -12,7 +12,7 @@
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content</label>
-            <textarea class="form-control" rows="5" name="content">{{Session::get('content')}}</textarea>
+            <textarea class="form-control summernote" rows="5" name="content">{{Session::get('content')}}</textarea>
           </div>
           <button class="btn btn-primary" name="save" type="submit"> Save</button>
     </form>
