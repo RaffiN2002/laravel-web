@@ -15,7 +15,8 @@ class controllerPage extends Controller
      */
     public function index()
     {
-        return view('dashboard.page/index');
+        $data = page::orderBy('title', 'asc')->get();
+        return view('dashboard.page/index')->with('data',$data);
     }
 
     /**
