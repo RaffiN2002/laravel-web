@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class controllerPage extends Controller
 {
@@ -23,7 +25,7 @@ class controllerPage extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.page.create');
     }
 
     /**
@@ -34,7 +36,26 @@ class controllerPage extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Session::flash('title',$request->title);
+        Session::flash('content',$request->content);
+        $request->validate(
+            [
+                'title'=>'required',
+                'content'=>'required',
+            ], 
+            [
+                'title.required'=> 'Title cannot be empty',
+                'content.required'=>'Content cannot be empty',
+            ]
+            );
+
+            $data = [
+                'title'=>$request->title,
+                'content'=>$request->content
+            ];
+            page::create($data);
+
+            return redirect()->route('page.index')->with('success','Data Saved');
     }
 
     /**

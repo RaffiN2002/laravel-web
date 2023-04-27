@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class page extends Model
 {
     use HasFactory;
-    protected $table = "page";
+    protected $table = "pages";
     protected $fillable = ['title', "content"];
 }
