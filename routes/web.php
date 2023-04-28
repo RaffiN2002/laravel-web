@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\authcontroller;
 use App\Http\Controllers\controllerPage;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\educationController;
+use App\Http\Controllers\experienceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +33,7 @@ Route::prefix('dashboard')->middleware('auth')->group(
     function () {
         Route::get('/',[controllerPage::class,'index']);
         Route::resource('page', controllerPage::class);
+        Route::resource('experience',experienceController::class);
+        Route::resource('education',educationController::class);
     }
 );
