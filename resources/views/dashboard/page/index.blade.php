@@ -1,6 +1,6 @@
 @extends('dashboard.layout')
 @section('content')
-    <p class="card-title">Admin Page</p>
+    <p class="card-title">Main Page</p>
     <div class="pb-3"><a href="{{route('page.create')}}" class="btn btn-primary"> + Add Page </a></div>
     <div class="table-responsive">
         <table class="table table-stripped">

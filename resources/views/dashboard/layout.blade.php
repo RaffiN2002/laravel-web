@@ -85,7 +85,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{route('page.index')}}">
               <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-              <span class="menu-title">Admin Page</span>
+              <span class="menu-title">Main Page</span>
             </a>
           </li>
           <li class="nav-item">
@@ -104,6 +104,18 @@
             <a class="nav-link" href="{{route('skill.index')}}">
               <i class="mdi mdi-file-document-box-outline menu-icon"></i>
               <span class="menu-title">Skill</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('profile.index')}}">
+              <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+              <span class="menu-title">Profile</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('pageSettings.index')}}">
+              <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+              <span class="menu-title">Page Settings</span>
             </a>
           </li>
         </ul>
