@@ -7,6 +7,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\skillController;
 use App\Http\Controllers\profileController;
 use App\Http\Controllers\educationController;
+use App\Http\Controllers\frontpageController;
 use App\Http\Controllers\experienceController;
 use App\Http\Controllers\pageSettingsController;
 
@@ -21,9 +22,8 @@ use App\Http\Controllers\pageSettingsController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/',[frontpageController::class,"index"]);
 
 Route::redirect('home', 'dashboard');
 
