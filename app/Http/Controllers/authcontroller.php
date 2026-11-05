@@ -19,19 +19,19 @@ class authcontroller extends Controller
     }
 
     function callback(){
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver('google')->stateless()->user();
         $id = $user->id;
         $email = $user->email;
         $name = $user->name;
         $avatar = $user->avatar;
 
-
-
         $check = User::where('email',$email)->count();
         if($check > 0){
             $avatar_file = $id.".jpg";
-            $fileContent = file_get_contents($avatar);
-            File::put(public_path("db_admin/images/faces/$avatar_file"),$fileContent);
+            $fileContent = @file_get_contents($avatar);
+            if ($fileContent) {
+                File::put(public_path("db_admin/images/faces/$avatar_file"),$fileContent);
+            }
 
             $user = User::updateOrCreate(
                 ['email' => $email],
@@ -43,7 +43,6 @@ class authcontroller extends Controller
         else{
             return redirect()->to('auth')->with('error', 'Access denied due to unauthorized account');
         }
-    
     }
 
     public function logout(){

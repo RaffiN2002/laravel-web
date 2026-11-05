@@ -32,6 +32,17 @@ Route::get('/auth/redirect', [authcontroller::class, "redirect"])->middleware('g
 Route::get('/auth/callback', [authcontroller::class, "callback"])->middleware('guest');
 Route::get('/auth/logout', [authcontroller::class, "logout"]);
 
+if (app()->environment('local')) {
+    Route::get('/dev-login', function () {
+        $user = \App\Models\User::first();
+        if ($user) {
+            \Illuminate\Support\Facades\Auth::login($user);
+            return redirect('dashboard');
+        }
+        return 'No user found in database. Run php artisan db:seed first.';
+    });
+}
+
 Route::prefix('dashboard')->middleware('auth')->group(
     function () {
         Route::get('/',[controllerPage::class,'index']);
