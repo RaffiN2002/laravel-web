@@ -10,6 +10,7 @@ use App\Http\Controllers\educationController;
 use App\Http\Controllers\frontpageController;
 use App\Http\Controllers\experienceController;
 use App\Http\Controllers\pageSettingsController;
+use App\Http\Controllers\projectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ use App\Http\Controllers\pageSettingsController;
 
 
 Route::get('/',[frontpageController::class,"index"]);
+Route::post('/contact', [frontpageController::class, "sendContact"])->name('contact.send');
 
 Route::redirect('home', 'dashboard');
 
@@ -55,5 +57,6 @@ Route::prefix('dashboard')->middleware('auth')->group(
         Route::post('profile',[profileController::class,'update'])->name('profile.update');
         Route::get('pageSettings',[pageSettingsController::class,'index'])->name('pageSettings.index');
         Route::post('pageSettings',[pageSettingsController::class,'update'])->name('pageSettings.update');
+        Route::resource('project', projectController::class);
     }
 );

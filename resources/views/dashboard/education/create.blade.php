@@ -33,6 +33,10 @@
                 <div class="col-auto"><input type="date" class="form-control form-control-sm" name="end" placeholder="dd/mm/yyy" {{Session::get('end')}}></div>
             </div>
           </div>
+          <div class="mb-3">
+            <label for="content" class="form-label">Achievements</label>
+            <textarea class="form-control summernote" rows="5" name="content">{{Session::get('content')}}</textarea>
+          </div>
           <button class="btn btn-primary" name="save" type="submit"> Save</button>
     </form>
 @endsection

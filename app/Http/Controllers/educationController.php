@@ -46,6 +46,7 @@ class educationController extends Controller
         Session::flash('info3',$request->info3);
         Session::flash('start',$request->start);
         Session::flash('end',$request->end);
+        Session::flash('content',$request->content);
         $request->validate(
             [
                 'title'=>'required',
@@ -64,6 +65,7 @@ class educationController extends Controller
                 'info1'=>$request->info1,
                 'info2'=>$request->info2,
                 'info3'=>$request->info3,
+                'content'=>$request->content,
                 'type'=>$this->_type,
                 'start'=>$request->start,
                 'end'=>$request->end
@@ -123,6 +125,7 @@ class educationController extends Controller
                 'info1'=>$request->info1,
                 'info2'=>$request->info2,
                 'info3'=>$request->info3,
+                'content'=>$request->content,
                 'type'=>$this->_type,
                 'start'=>$request->start,
                 'end'=>$request->end,

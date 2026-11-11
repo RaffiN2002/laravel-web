@@ -42,6 +42,18 @@
         color: #FFFFFF;
         text-decoration: none;
     }
+
+    /* Keep Summernote's editable list layout independent from dashboard lists. */
+    .note-editor .note-editable ul,
+    .note-editor .note-editable ol {
+        margin: 0 0 1rem;
+        padding-left: 0.5rem !important;
+        list-style-position: inside !important;
+    }
+
+    .note-editor .note-editable li {
+        line-height: 1.5;
+    }
 </style>
 </head>
 <body>
@@ -98,6 +110,12 @@
             <a class="nav-link" href="{{route('education.index')}}">
               <i class="mdi mdi-file-document-box-outline menu-icon"></i>
               <span class="menu-title">Education</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('project.index')}}">
+              <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+              <span class="menu-title">Project</span>
             </a>
           </li>
           <li class="nav-item">
@@ -172,37 +190,50 @@
 
   <script src="{{ asset('db_admin') }}/js/jquery.cookie.js" type="text/javascript"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.js"></script>
 
-  <!-- tokenfield-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
-
-
 <script>
-  $(document).ready(function() {
-      $('.summernote').summernote({
-        height: 200
+  $(function() {
+      $('.summernote').each(function() {
+          var $editor = $(this);
+
+          $editor.summernote({
+              height: 200,
+              // Keep the editing commands explicit so they remain available when
+              // the dashboard theme changes its default Summernote configuration.
+              toolbar: [
+                  ['style', ['style']],
+                  ['font', ['bold', 'underline', 'italic', 'clear']],
+                  ['fontname', ['fontname']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+                  ['table', ['table']],
+                  ['insert', ['link', 'picture', 'video']],
+                  ['view', ['fullscreen', 'codeview', 'help']]
+              ],
+              callbacks: {
+                  onInit: function() {
+                      $editor.next('.note-editor').find('.note-editable')
+                          .attr('spellcheck', 'true');
+                  },
+                  // Preserve the current selection when the toolbar takes focus.
+                  onBlur: function() {
+                      $editor.summernote('saveRange');
+                  }
+              }
+          });
+      });
+
+      $('form').on('submit', function() {
+          $(this).find('.summernote').each(function() {
+              var $editor = $(this);
+              if ($editor.next('.note-editor').length) {
+                  $editor.val($editor.summernote('code'));
+              }
+          });
       });
   });
 </script>
-
-@if (isset($skill))
-
-<script>
-  $(document).ready(function() {
-      $('.skill').tokenfield({
-          autocomplete: {
-              source: [{!! $skill !!}],
-              delay: 100
-          },
-          showAutocompleteOnFocus: true
-      });
-  });
-</script>
-    
-@endif
 
 </body>
 
